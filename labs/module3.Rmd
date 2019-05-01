@@ -1,0 +1,560 @@
+---
+title: "Module 3: Exploring qualitative variables"
+author: "Jeroen Claes | <jeroen.claes@kuleuven.be> | <jeroen@cropland.be>"
+output: 
+ html_document:
+  self_contained: false 
+---
+
+```{r, include=FALSE}
+library(testwhat)
+tutorial::go_interactive()
+```
+
+## 1. Factors 
+### 1.1 Factor levels
+
+```{r ex="factors1", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+library(dplyr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="factors1", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column state to a factor
+
+# Print its levels
+
+```
+
+```{r ex="factors1", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column state to a factor
+dataSet<- dataSet %>% 
+  mutate(state=as.factor(state))
+# Print its levels
+levels(dataSet$state)
+```
+
+```{r ex="factors1", type="sct"}
+ test_output_contains('levels(dataSet$state)',  incorrect_msg  = "Make sure to print the levels of the factor!")
+success_msg("Great!")
+```
+
+### 1.2 Recoding factors
+```{r ex="factors2", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv") 
+```
+
+```{r ex="factors2", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+# Load the dplyr package
+
+# Convert all character columns to factor
+
+# The `state` column has quite some duplicates: 
+# "Andalucía" and "Andalusia", "Aragon" and "Aragón", "Castile-La Mancha" and "Castilla-La-Mancha", "Castile and León" and "Castilla y León", "Catalonia" and "Cataluña", "Community of Madrid" and "Comunidad de Madrid", "Valencian Community" and "Comunidad Valenciana", "Basque Country" and "País Vasco"
+# Recode all Spanish names to their English alternative
+
+# Print the new levels of the `state` column
+
+```
+
+```{r ex="factors2", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+# Load the dplyr package
+library(dplyr)
+# Convert all character columns to factor
+dataSet <- dataSet %>%
+  mutate_if(is.character, as.factor)
+# The state column has quite some duplicates: 
+# "Andalucía" and "Andalusia","Aragón" and "Aragon","Castilla-La-Mancha" and "Castile-La Mancha", "Castilla y León" and "Castile and León", "Cataluña" and "Catalonia", "Comunidad de Madrid" and "Community of Madrid", "Comunidad Valenciana" and "Valencian Community", "País Vasco" and "Basque Country"
+# Recode all Spanish names to their English alternative
+dataSet <- dataSet %>%
+  mutate(state=recode(dataSet$state, "Andalucía"="Andalusia" ,"Aragón" = "Aragon","Castilla-La-Mancha"= "Castile-La Mancha", "Castilla y León"="Castile-and-León", "Cataluña"="Catalonia", "Comunidad de Madrid"="Community of Madrid", "Comunidad Valenciana"="Valencian Community", "País Vasco"="Basque Country"))
+# Print the new levels of the `state` column
+levels(dataSet$state)
+```
+
+```{r ex="factors2", type="sct"}
+test_library_function("dplyr", incorrect_msg="Make sure to load the dplyr package!")
+test_output_contains('levels(dataSet$state)',  incorrect_msg = "Make sure to print the new levels of the factor 'state'!")
+success_msg("Great!")
+```
+
+### 1.3 Re-organizing factors
+
+```{r ex="factors3", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="factors3", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+
+# Print its levels
+
+# Relevel the corpus factor: its first value should be 'Twitter'
+
+# Print its levels again
+
+```
+
+```{r ex="factors3", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+dataSet <- dataSet %>%
+  mutate(corpus=as.factor(corpus))
+# Print its levels
+levels(dataSet$corpus)
+# Relevel the corpus factor: its first value should be 'Twitter'
+dataSet <- dataSet %>%
+  mutate(corpus=relevel(corpus, ref="Twitter"))
+# Print its levels again
+levels(dataSet$corpus)
+
+```
+
+```{r ex="factors3", type="sct"}
+test_output_contains("levels(dataSet$corpus)", incorrect_msg = "Make sure to print the levels of the factor!")
+success_msg("Great!")
+```
+
+## 2. Frequencies: counting values
+### 2.1 Counting the `negation` variable 
+```{r ex="counts_negation_freq", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="counts_negation_freq", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column negation to a factor
+
+# Compute a table for the negation variable, store it in the variable 'negationTab'
+
+# Convert 'negationTab' to a data.frame
+
+# Print 'negationTab'
+
+
+```
+
+```{r ex="counts_negation_freq", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column negation to a factor
+dataSet <- dataSet %>%
+  mutate(negation=as.factor(negation))
+# Compute a table for the negation variable, store it in the variable 'negationTab'
+negationTab<-table(dataSet$negation)
+# Convert 'negationTab' to a data.frame
+negationTab<-as.data.frame(negationTab)
+# Print 'negationTab'
+negationTab
+```
+
+```{r ex="counts_negation_freq", type="sct"}
+test_object("negationTab",incorrect_msg="Make sure to compute the table!")
+test_output_contains("negationTab", incorrect_msg = "Make sure to print the table!")
+success_msg("Great!")
+
+```
+
+### 2.2 Counting the `province` variable 
+```{r ex="counts_province", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="counts_province", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column province to a factor
+
+# Compute a table for the province variable, store it in the variable 'provinceTab'
+
+# Convert 'provinceTab' to a data.frame
+
+# Print 'provinceTab'
+
+
+```
+
+```{r ex="counts_province", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column province to a factor
+dataSet <- dataSet %>%
+  mutate(province<-as.factor(province))
+# Compute a table for the province variable, store it in the variable 'provinceTab'
+provinceTab<-table(dataSet$province)
+# Convert 'provinceTab' to a data.frame
+provinceTab<-as.data.frame(provinceTab)
+# Print 'provinceTab'
+provinceTab
+```
+
+```{r ex="counts_province", type="sct"}
+test_object("provinceTab", incorrect_msg="Make sure to compute the table!")
+test_output_contains("provinceTab", incorrect_msg="Make sure to print the table!")
+success_msg("Great!")
+```
+
+## 3. Proportions
+### 3.1 Proportions for the `Typical.Action.Chain.Pos` variable 
+```{r ex="proportionsTypical.Action.Chain.Pos", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="proportionsTypical.Action.Chain.Pos", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column Typical.Action.Chain.Pos to a factor
+
+# Compute a table for the Typical.Action.Chain.Pos variable, store it in the variable 'Typical.Action.Chain.PosTab'
+
+# Compute proportions for that table
+
+# Print 'Typical.Action.Chain.PosTab'
+
+
+```
+
+```{r ex="proportionsTypical.Action.Chain.Pos", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column Typical.Action.Chain.Pos to a factor
+dataSet <- dataSet %>%
+  mutate(Typical.Action.Chain.Pos=as.factor(Typical.Action.Chain.Pos))
+# Compute a table for the Typical.Action.Chain.Pos variable, store it in the variable 'Typical.Action.Chain.PosTab'
+Typical.Action.Chain.PosTab<-table(dataSet$Typical.Action.Chain.Pos)
+# Compute proportions for that table
+Typical.Action.Chain.PosTab<-prop.table(Typical.Action.Chain.PosTab)
+# Print 'Typical.Action.Chain.PosTab'
+Typical.Action.Chain.PosTab
+```
+
+```{r ex="proportionsTypical.Action.Chain.Pos", type="sct"}
+test_object("Typical.Action.Chain.PosTab",incorrect_msg="Make sure to compute the table!")
+test_output_contains('Typical.Action.Chain.PosTab',  incorrect_msg = "Make sure to compute proportions for the table!")
+success_msg("Great!")
+```
+
+### 3.2 Proportions for the `corpus` variable 
+```{r ex="proportionscorpus1", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="proportionscorpus1", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+
+# Compute a table for the corpus variable, store it in the variable 'corpusTab'
+
+# Convert the corpusTab object to a data.frame 
+
+# Compute proportions based on the Freq column of that data.frame. Store the proportions in a new column called 'prop'
+
+# Print corpusTab
+
+```
+
+```{r ex="proportionscorpus1", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+dataSet <- dataSet %>%
+  mutate(corpus=as.factor(corpus))
+# Compute a table for the corpus variable, store it in the variable 'corpusTab'
+corpusTab<-table(dataSet$corpus)
+# Convert 'corpusTab' to a data.frame
+corpusTab<-as.data.frame(corpusTab)
+# Compute proportions based on the Freq column of that data.frame. Store the proportionsin a new column called 'prop'
+corpusTab$prop<-corpusTab$Freq/sum(corpusTab$Freq, na.rm=TRUE)
+# Print corpusTab
+corpusTab
+```
+
+```{r ex="proportionscorpus1", type="sct"}
+test_object("corpusTab",incorrect_msg="Make sure to compute the table!")
+test_output_contains('corpusTab',  incorrect_msg="Make sure to compute proportions for the table!")
+success_msg("Great!")
+```
+
+## 4. Bar plots 
+### 4.1 Exploring the counts of the `corpus` variable (1/2)
+- **ANALYZE**:
+   - Which corpus provided the most examples?
+
+```{r ex="freq1", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="freq1", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+
+# Print a table of the corpus factor 
+
+```
+
+```{r ex="freq1", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+dataSet <- dataSet %>%
+  mutate(corpus=as.factor(corpus))
+
+# Print a table of the corpus factor 
+table(dataSet$corpus)
+```
+
+```{r ex="freq1", type="sct"}
+test_output_contains("table(dataSet$corpus)", incorrect_msg = "Don't forget to print the table!")
+success_msg("Great!")
+```
+
+### 4.2 Exploring the counts of the `corpus` variable (2/2)
+```{r ex="freq2", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="freq2", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+
+# Load ggplot2
+
+# Draw a basic bar chart of the corpus factor
+
+```
+
+```{r ex="freq2", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+dataSet <- dataSet %>%
+  mutate(corpus=as.factor(corpus))
+# Load ggplot2
+library(ggplot2)
+# Draw a basic bar chart of the corpus factor
+ggplot(dataSet, aes(x=corpus)) + geom_bar()
+```
+
+```{r ex="freq2", type="sct"}
+test_library_function("ggplot2", incorrect_msg = "Don't forget to load ggplot2")
+test_ggplot(index = 1)
+success_msg("Great!")
+```
+
+### 4.3 Exploring the counts of the `broad.regions` variable (1/2)
+- **ANALYZE**:
+  - Which broad.regions provided the most examples?
+
+```{r ex="broad.regions_1", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="broad.regions_1", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column broad.regions to a factor
+
+# Print a table of the broad.regions factor
+
+```
+
+```{r ex="broad.regions_1", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column broad.regions to a factor
+dataSet <- dataSet %>% 
+  mutate(broad.regions= as.factor(broad.regions))
+
+# Print a table of the broad.regions factor
+table(dataSet$broad.regions)
+```
+
+```{r ex="broad.regions_1", type="sct"}
+ test_output_contains('table(dataSet$broad.regions)',  incorrect_msg = "Make sure to print the table!")
+
+success_msg("Great!")
+```
+
+### 4.3 Exploring the counts of the `broad.regions` variable (2/2)
+```{r ex="broad.regions", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="broad.regions", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column broad.regions to a factor
+
+# Load ggplot2
+
+# Draw a pretty bar chart of the broad.regions factor: each region has its own fill and color, there is no legend title, the Y axis title is "Number of occurrences", the X axis title is "Large regions", the plot title is "Number of occurrences per region"
+
+```
+
+```{r ex="broad.regions", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column broad.regions to a factor
+dataSet <- dataSet %>% 
+  mutate(broad.regions= as.factor(broad.regions))
+
+# Load ggplot2
+library(ggplot2)
+# Draw a basic bar chart of the broad.regions factor
+ggplot(dataSet, aes(x=broad.regions, fill=broad.regions, color=broad.regions)) + geom_bar() + theme(legend.title = element_blank()) + labs(x="Large regions", y="Number of occurrences", title="Number of occurrences per region")
+```
+
+```{r ex="broad.regions", type="sct"}
+test_library_function("ggplot2")
+test_ggplot(index=1, all_fail_msg = "Computer says no. This plot is completely wrong", data_fail_msg = "Make sure you include the data in the ggplot call", aes_fail_msg = "Make sure you define the correct aesthetics (aes)", geom_fail_msg = "Make sure you define the correct plotting function (geom_)")
+success_msg("Great!")
+```
+
+
+
+### 4.4 Exploring the proportions of the `corpus` variable
+```{r ex="prop2", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="prop2", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+
+# Load ggplot2
+
+# Draw a basic bar chart of the proportions of the corpus factor
+
+```
+
+```{r ex="prop2", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column corpus to a factor
+dataSet <- dataSet %>%
+  mutate(corpus=as.factor(corpus))
+# Load ggplot2
+library(ggplot2)
+# Draw a basic bar chart of the proportions of the corpus factor
+ggplot(dataSet, aes(x=corpus)) + geom_bar(aes(y=..count../sum(..count..)))
+```
+
+```{r ex="prop2", type="sct"}
+test_library_function("ggplot2")
+test_ggplot(index=1, all_fail_msg = "Computer says no. This plot is completely wrong", data_fail_msg = "Make sure you include the data in the ggplot call", aes_fail_msg = "Make sure you define the correct aesthetics (aes)", geom_fail_msg = "Make sure you define the correct plotting function (geom_)")
+
+success_msg("Great!")
+```
+
+### 4.5 Exploring the proportions of the `broad.regions` variable (1/2)
+- **ANALYZE**:
+      - Which broad.regions provided the most examples?
+
+```{r ex="broad.regions_1", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="broad.regions_1", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column broad.regions to a factor
+
+# Print a table of the proportions of the broad.regions factor 
+
+```
+
+```{r ex="broad.regions_1", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column broad.regions to a factor
+dataSet <- dataSet %>% 
+  mutate(broad.regions= as.factor(broad.regions))
+
+# Print a table of the proportions of the broad.regions factor 
+table(dataSet$broad.regions)/sum(table(dataSet$broad.regions))
+```
+
+```{r ex="broad.regions_1", type="sct"}
+ test_output_contains('table(dataSet$broad.regions)',  incorrect_msg = "Make sure to print the table!")
+
+success_msg("Great!")
+```
+
+### 4.5 Exploring the proportions of the `broad.regions` variable (2/2)
+```{r ex="broad.regions_prop", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
+```
+
+```{r ex="broad.regions_prop", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column broad.regions to a factor
+
+# Load ggplot2
+
+# Draw a pretty bar chart of the proportions of the broad.regions factor: each region has its own fill and color, there is no legend title, the Y axis title is "Number of occurrences", the X axis title is "Large regions", the plot title is "Number of occurrences per region"
+
+```
+
+```{r ex="broad.regions_prop", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+
+# Convert the column broad.regions to a factor
+dataSet <- dataSet %>% 
+  mutate(broad.regions= as.factor(broad.regions))
+# Load ggplot2
+library(ggplot2)
+# Draw a pretty bar chart of the proportions of the broad.regions factor: each region has its own fill and color, there is no legend title, the Y axis title is "Number of occurrences", the X axis title is "Large regions", the plot title is "Number of occurrences per region"
+ggplot(dataSet, aes(x=broad.regions, fill=broad.regions, color=broad.regions)) + geom_bar(aes(y=..count../sum(..count..))) + theme(legend.title = element_blank()) + labs(x="Large regions", y="Number of occurrences", title="Number of occurrences per region")
+```
+
+```{r ex="broad.regions_prop", type="sct"}
+test_library_function("ggplot2")
+test_ggplot(index=1, all_fail_msg = "Computer says no. This plot is completely wrong", data_fail_msg = "Make sure you include the data in the ggplot call", aes_fail_msg = "Make sure you define the correct aesthetics (aes)", geom_fail_msg = "Make sure you define the correct plotting function (geom_)")
+success_msg("Great!")
+```
+
+## 5. References
+- Claes, J. (2017). Cognitive and geographic constraints on morphosyntactic variation: The variable agreement of presentational haber in Peninsular Spanish. *Belgian Journal of Linguistics* (31), 28-53.
