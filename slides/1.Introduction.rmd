@@ -1,0 +1,294 @@
+---
+title: 'Module 1: Introduction to R'
+author: "Jeroen Claes"
+output:
+  revealjs::revealjs_presentation:
+    css: white.css
+    self_contained: no
+    transition: none
+  html_document:
+    toc: no
+  word_document:
+    toc: no
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval=TRUE, message=FALSE, warning=FALSE, error=FALSE, fig.height = 4, dpi = 300)
+library(pander)
+library(knitr)
+library(tibble)
+```
+
+
+## Introduction
+
+## About this course (1/3)
+- Four goals:
+    - Introduction to R (This module)
+    - Viewing, manipulating, and exporting tabular data (Module 2)
+    - Exploring qualitative variables (Module 3)
+    - Exploring the relationships between qualitative variables (Module 4)
+    - Elements of logistic regression (Module 5)
+
+## About this course (2/2)
+- Method:
+    - Code demonstrations/discussion. We will use datasets from (my) earlier research for the demonstrations 
+    - You will perform the exercises in a controlled environment on http://www.jeroenclaes.be/statistics_for_linguistics. The links to the labs will be on the slides
+    - You will perform the Module-final projects with your *own dataset* on your own machine. 
+    - The Module-final projects add up to a completely finished script that answers the research question you brought with you
+- You'll walk away with: 
+    - A solid understanding of how to load, manipulate, explore and report on data with R
+    - A finished script that analyzes the research question you defined 
+
+
+## In this module
+- A general introduction
+- A general introduction to R
+- Programming 101
+- Importing tabular data into R
+
+
+## A general introduction to R
+
+## What is R? 
+- R's full name is: *R: A language and environment for statistical computing and graphics*
+- Open-source programming language designed specifically for the manipulation, analysis, visualisation, and modeling of data  
+- R was primarily designed for interactive use, for which it includes many features that make your life easier (but not necesarily your computer's)
+
+## What is RStudio? (1/2)
+- RStudio is THE company in the R ecosystem 
+- RStudio develops software to support the use of R in enterprise, among others:
+    - RStudio IDE (Integrated Development Environment, a piece of software that helps you write R code and analyse data with R)
+
+## What is RStudio (2/2)
+- RStudio IDE makes programming in R easier:
+    - Hints packages
+    - Hints function names
+    - Hints objects in memory
+    - Hints column names
+    - Allows you to have your code and the window that executes your code side-by-side
+- The course package contains a handy cheat sheet that explains all the options and possibilities of the RStudio IDE (courtesy of RStudio, Inc.)
+    
+## Let's get our hands dirty with code!
+- From this point on, you should try to execute the code snippets I type on the screen
+
+## Packages (1/3)
+- RStudio also develops a lot of **packages**, extensions for the R language that extend its functionality  
+- At the end of January 2019, there were **13,626 packages** available on *The Comprehensive R Archive Network (CRAN)* (± 1,000 more than a year earlier)
+
+## Packages (2/3)
+- To install a *package*,  type in `install.packages("NameOfThePackage")`. You only have to do this once
+- To load a package, you have to type `library(NameOfThePackage)` once per session
+- To consult the documentation of a particular function, simply type in `?NameOfTheFunction`, AFTER loading the package
+
+## Packages (3/3)
+- The following code will install the lightweight `RColorBrewer` package, which is used to create color palettes for plots
+
+```{r documentation, echo=TRUE, eval=FALSE}
+install.packages("RColorBrewer")
+library(RColorBrewer)
+?brewer.pal
+RColorBrewer::brewer.pal()
+```
+
+## Taking stock
+- In this part we have learned:
+    - How to install packages
+    - How to load packages
+    - How to consult the documentation of functions
+
+## Programming 101
+
+## Programming 101: Objects and variables (1/4)
+- Objects: a piece of information in R memory
+- Variables: a reference to this information
+- In the example 
+  - *hello* is an object
+  - *a* is a variable
+
+```{r cars, echo = TRUE}
+a <- "hello"
+```
+
+## Programming 101: Objects and variables (2/4)
+- You can create variables (and objects) by typing in a name and assigning a value to that name with the assignment operator `<-`
+    
+## Programming 101: Objects and variables (3/4)
+- There's a few things you have to keep in mind when assigning variables:
+    - Variables are case sensitive: *ab* vs. *Ab* vs. *aB*
+    - Spaces and non-ASCII characters (e.g., *hé* ) are not allowed in variable names
+    - Variable names cannot start with a number (e.g., `3b`)
+    - **BUT** if you wrap your variable names with backticks *``*, all of this **IS** allowed
+    
+## Programming 101: Objects and variables (4/4)
+- You can save yourself a lot of frustration if you adopt a naming system and stick to it
+- There's two commonly used systems:
+    - *snake_case*
+    - *camelCase*
+
+## Programming 101: using R as a calculator 
+- Because variables refer to objects, you can easily perform calculations with numeric variables
+
+```{r rekenmachine, echo = TRUE}
+a <- 2
+b <- 4
+a*b
+```
+
+## Programming 101: Vectors: the basic data structure in R (1/8)
+- Up until now, we have only considered variables that store just one piece of information (e.g., a single number, *1*)
+- Most often, we will deal with variables that contain multiple bits of information, e.g., a list of values such as *a, b, c*
+- In R, these are called `vectors`. In fact, everything in R is a vector
+- The types of variables we have considered up until now (scalars) are just vectors of length 1!
+
+## Programming 101: Vectors: the basic data structure in R (2/4)
+- The basic vector-creating function in R is `c()` (from **c***ombine*)
+- R automatically guesses the data type of the vector
+
+```{r vectors}
+fruits <- c("apples", "oranges", "bananas")
+
+numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+```
+
+## Programming 101: Vectors: the basic data structure in R (3/4)
+- Since the basic data structure in R is the vector, most functions/operations (e.g., multiply by 2) apply equally well to a single element as they do to a vector of elements
+
+```{r vectorizedOps}
+numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+numbers *2
+numbers -2
+numbers +2
+```
+
+## Programming 101: Vectors: the basic data structure in R (4/4)
+- It is generally **unnecessary** to write loops in R to iterate over the different elements of a vector to get things done
+- There's a first exercise waiting for you at: http://www.jeroenclaes.be/statistics_for_linguistics/class1.html
+
+## Reading data into R | Importing CSV and Excel files 
+
+## CSV files: a necessary evil (1/3)
+- CSV (comma-separated values) files are a widely used data format to exchange datasets between platforms and systems
+- CSV files are very useful, but they can also be annoying:
+    - Fields that are not separated properly
+    - Delimiter characters that are used within fields without quoting
+    - Decimal separators that vary from locale to locale
+    - Encoding issues (the translation between bits and human-readable characters)
+
+## CSV files: a necessary evil (2/3)
+- The last one is especially common, as there's hundreds of encoding options out there, depending on the user's locale
+- Just some quick examples of the variety of encodings that are out there:
+    - On Windows, Excel will produce CP-1252 or ISO-8559-1 encoded CSV files
+    - Older versions of Excel for Mac would produce Mac-Roman encoding
+    - Newer versions of Excel for Mac use UTF-8 (Unicode)
+    
+## CSV files: a necessary evil (3/3)
+- Out of the box, R assumes the cross-platform UTF-8 encoding standard
+- This means that if you read a ISO-8559-1-encoded CSV file without specifying the encoding, all non-ASCII characters (e.g., `é`) will look weird
+- Let us first take a look at how you can load a UTF-8 encoded CSV file, keeping the encoding issue for later
+
+## The `readr` package (1/2)
+- R has build-in CSV readers (the functions `read.csv`, `read.csv2`, `read.tsv` and `read.delim`), but these are slow, inflexible and not fault-tolerant
+- It is better to use the `readr` package, which is much faster, more flexible, and more fault-tolerant
+```{r installReader, eval=FALSE}
+install.packages("readr")
+```
+
+## The `readr` package (2/2)
+- The `readr` package has four main reader functions, which accept the same set of arguments:
+    - `read_csv`: read comma-separated files
+    - `read_csv2`: read semicolon-separated files
+    - `read_tsv`: read tab-separated files
+    - `read_delim`: read files separated by an arbitrary delimiter character, which you can specify yourself
+
+## How to read CSV-files with `readr` (1/3)
+- Let us explore the syntax of the `readr` functions by looking at how we can read a dataset from the web
+
+```{r readCodeFile}
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/statistics_for_linguistics/datasets/class3_claes_2017.csv")
+```
+
+## How to read CSV-files with `readr` (2/3)
+
+```{r readCodeFileEx, eval=TRUE, echo=F}
+library(dplyr)
+glimpse(dataSet)
+```
+
+## Dealing with encoding (and other locale issues) (1/4)
+- Sometimes you will receive a file from a colleague and it's impossible to know what encoding it is in
+- For cases like that, `readr` includes a function (`guess_encoding`) that determines the most likely encoding of a file
+- Here we find that the most likely encoding is *ASCII* (which is a subset of UTF-8, the default), so we don't have to specify it explicitly
+
+```{r guessencoding}
+guess_encoding("http://www.jeroenclaes.be/statistics_for_linguistics/datasets/class3_claes_2017.csv")
+```
+    
+## Dealing with encoding (and other locale issues) (2/4)
+- When you do want to specify the encoding of a file, you can do so by defining a **locale** for your file
+- Think about a locale as a complete specification of all culture/country-specific aspects of a file:
+    - date names
+    - date formatting
+    - time formatting
+    - decimal mark
+    - thousand separator
+    - time zone
+    - encoding
+- Of course you do not have to specify all of these aspects to change just the encoding, but know that these options are available
+
+## Dealing with encoding (and other locale issues) (3/4)
+- To change the locale for your file, you can assign the result of the `locale` function to the `locale` argument of the `readr` functions
+- The following ficticious example would read a ISO-8859-1 file, in which commas are used as decimal separators, and full stops are used as thousand separators
+```{r fileWithBadEncoding, eval=FALSE}
+dataSet <- read_csv2("someFile.csv", locale=locale(encoding="ISO-8859-1", decimal_mark = ",",grouping_mark = "."))
+```
+
+## Taking stock 
+- In this part we have learned:
+    - How to import different types of CSV files into R, using functions provided by the `readr` package
+    - How to detect the encoding of a CSV file
+    - How to specify the locale settings of a CSV file
+
+## Reading data into R: Excel files
+- While CSV files are common, most organizations have much data sitting in Excel files
+- We can import the contents of Excel files to R as well
+- To this end, we can use the `readxl` package
+```{r installreadExcel, eval=FALSE}
+install.packages("readxl")
+```
+
+## The `readxl` package (1/4)
+- For most use cases, the `read_excel` function will do everything you need to do
+- It automatically detects the difference between `.xls` and `.xlsx`, based on the file extension
+- If you want to specify the file type yourself (e.g., when the extension is wrong), use the functions `read_xlsx` and `read_xls` accordingly
+
+## The `readxl` package (2/4)
+- The following line will import the first sheet from the `sales.xlsx` file in your `demonstration_data` folder
+
+```{r readCodeXlsx, eval=TRUE}
+library(readxl)
+dataSet <- read_excel("datasets/corpus_futuro.xlsx", sheet = 1)
+```
+
+
+## Taking stock
+- In this part we've learned:
+    - How to read in Excel sheets from excel files (.xlsx, .xls) with the `readxl` package
+    - How to specify the sheet we want to load to R memory
+    - How to specify the data types of the columns in our sheet
+
+## Module overview and module-final project
+
+## Module overview 
+- In this module, we have covered:
+    - A general introduction to R
+    - How to assign objects to variables
+    - How to perform basic arithmetic with R
+    - How to create and manipulate vectors
+    - How to read CSV data into R
+    - How to read Excel spreadsheets into R
+
+## Module-final project
+- Write a script that imports your dataset(s)
