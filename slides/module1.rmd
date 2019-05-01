@@ -24,7 +24,7 @@ library(tibble)
 ## Introduction
 
 ## About this course (1/3)
-- Four goals:
+- Five modules:
     - Introduction to R (This module)
     - Viewing, manipulating, and exporting tabular data (Module 2)
     - Exploring qualitative variables (Module 3)
