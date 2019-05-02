@@ -45,50 +45,7 @@ levels(dataSet$state)
 success_msg("Great!")
 ```
 
-### 1.2 Recoding factors
-```{r ex="factors2", type="pre-exercise-code"}
-Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
-library(readr)
-dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv") 
-```
-
-```{r ex="factors2", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
-# Load the dplyr package
-
-# Convert all character columns to factor
-
-# The `state` column has quite some duplicates: 
-# "Andalucía" and "Andalusia", "Aragon" and "Aragón", "Castile-La Mancha" and "Castilla-La-Mancha", "Castile and León" and "Castilla y León", "Catalonia" and "Cataluña", "Community of Madrid" and "Comunidad de Madrid", "Valencian Community" and "Comunidad Valenciana", "Basque Country" and "País Vasco"
-# Recode all Spanish names to their English alternative
-
-# Print the new levels of the `state` column
-
-```
-
-```{r ex="factors2", type="solution"}
-# The data.frame dataSet is already in your workspace. 
-# Load the dplyr package
-library(dplyr)
-# Convert all character columns to factor
-dataSet <- dataSet %>%
-  mutate_if(is.character, as.factor)
-# The state column has quite some duplicates: 
-# "Andalucía" and "Andalusia","Aragón" and "Aragon","Castilla-La-Mancha" and "Castile-La Mancha", "Castilla y León" and "Castile and León", "Cataluña" and "Catalonia", "Comunidad de Madrid" and "Community of Madrid", "Comunidad Valenciana" and "Valencian Community", "País Vasco" and "Basque Country"
-# Recode all Spanish names to their English alternative
-dataSet <- dataSet %>%
-  mutate(state=recode(dataSet$state, "Andalucía"="Andalusia" ,"Aragón" = "Aragon","Castilla-La-Mancha"= "Castile-La Mancha", "Castilla y León"="Castile-and-León", "Cataluña"="Catalonia", "Comunidad de Madrid"="Community of Madrid", "Comunidad Valenciana"="Valencian Community", "País Vasco"="Basque Country"))
-# Print the new levels of the `state` column
-levels(dataSet$state)
-```
-
-```{r ex="factors2", type="sct"}
-test_library_function("dplyr", incorrect_msg="Make sure to load the dplyr package!")
-test_output_contains('levels(dataSet$state)',  incorrect_msg = "Make sure to print the new levels of the factor 'state'!")
-success_msg("Great!")
-```
-
-### 1.3 Re-organizing factors
+### 1.2 Re-organizing factors
 
 ```{r ex="factors3", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')

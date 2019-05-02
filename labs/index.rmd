@@ -20,11 +20,11 @@ The slides for the classes are available for download here:
 ## Handouts
 A version of the slides rendered as Word documents can be found here so can you take notes more easily:
 
-- [Module 1: Introduction to R](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module1.html)
-- [Module 2: Viewing, manipulating, and exporting tabular data](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module2.html)
-- [Module 3: Exploring qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module3.html)
-- [Module 4: Associations between qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module4.html)
-- [Module 5: Elements of logistic regression](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module5.html)
+- [Module 1: Introduction to R](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module1.docx)
+- [Module 2: Viewing, manipulating, and exporting tabular data](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module2.docx)
+- [Module 3: Exploring qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module3.docx)
+- [Module 4: Associations between qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module4.docx)
+- [Module 5: Elements of logistic regression](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module5.docx)
 
 ## Labs
 - [Module 1: Introduction to R](http://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html)

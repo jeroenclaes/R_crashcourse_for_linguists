@@ -1,0 +1,199 @@
+---
+title: 'Module 2: Viewing, manipulating, and exporting tabular data'
+author: "Jeroen Claes | <jeroen.claes@kuleuven.be> | <jeroen@cropland.be>"
+---
+## 1. Exploring data frames
+### Exploring data.frames (1/2)
+```{r, include=FALSE}
+tutorial::go_interactive()
+```
+
+
+```{r ex="explore", type="pre-exercise-code"}
+
+```
+
+```{r ex="explore", type="sample-code"}
+
+# Load the readr package
+
+# Read the following dataset  from the course companion site: 
+# http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class2_balota_et_al_2007.csv"
+# Store the data in the variable "dataSet"
+
+# Explore its dimensions: how many rows, how many columns?
+
+# Print the first 15 rows of the data.frame
+
+```
+
+```{r ex="explore", type="solution"}
+
+# Load the readr package
+library(readr)
+
+# Read the following dataset  from the course companion site: 
+# http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class2_balota_et_al_2007.csv"
+# Store the data in the variable "dataSet"
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class2_balota_et_al_2007.csv")
+# Explore its dimensions: how many rows, how many columns?
+dim(dataSet)
+# Print the first 15 rows of the data.frame
+head(dataSet, 15)
+
+```
+
+```{r ex="explore", type="sct"}
+test_output_contains("dim(dataSet)", incorrect_msg = "Make sure to print the dimensions of the data.frame.")
+test_output_contains("head(dataSet, 15)", incorrect_msg = "Make sure to print the first 15 lines.")
+success_msg("Great!")
+```
+
+### Exploring data.frames (2/2)
+
+```{r ex="explore2", type="pre-exercise-code"}
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class2_balota_et_al_2007.csv")
+```
+
+```{r ex="explore2", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+
+# Explore its dimensions: how many rows does it have?
+
+# Explore its dimensions: how many columns does it have?
+
+# Print a summary of the data.frame
+```
+
+```{r ex="explore2", type="solution"}
+# The data.frame dataSet is already in your workspace. Call ls() to see it
+ls()
+# Explore its dimensions: how many rows does it have?
+nrow(dataSet)
+# Explore its dimensions: how many columns does it have?
+ncol(dataSet)
+# Print a summary of the data.frame
+summary(dataSet)
+```
+
+```{r ex="explore2", type="sct"}
+test_output_contains("nrow(dataSet)", incorrect_msg = "Make sure to print the number of rows")
+test_output_contains("ncol(dataSet)", incorrect_msg = "Make sure to print the number of columns")
+test_output_contains("summary(dataSet)", incorrect_msg = "Make sure to print a summary")
+success_msg("Great!")
+```
+
+## 2. Basic `dplyr` verbs
+
+```{r ex="dplyr", type="pre-exercise-code"}
+
+```
+
+```{r ex="dplyr", type="sample-code"}
+# Load the readr package
+
+# Load Labov's(1966) Department Store Survey data from the course website to the object 'dataSet':
+# http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class6_Labov_1966.csv
+
+# Load the dplyr package
+
+# Write a series of commands to perform the following steps:
+# Take only the data from the Saks store
+
+# Take only the word fouRth
+
+# Take only the emphatic condition
+
+# Extract the r and store column
+
+# Add a column "praise" in which you store the string "Labov rocks!"
+
+# Compute the number of rows of the resulting dataSet
+
+# Compute the number columns of the resulting dataSet
+
+```
+
+```{r ex="explore2", type="solution"}
+# Load the readr package
+library(readr)
+# Load the course data from the course website to the object 'dataSet':
+# http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class5_Labov_et_al_2012.csv
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class6_Labov_1966.csv")
+# Load the dplyr package
+library(dplyr)
+# Write a series of commands to perform the following steps:
+# Take only the data from the Saks store
+dataSet <- dataSet %>%
+  filter(store=="Saks") %>%
+# Take only the word fouRth
+  filter(word=="fouRth") %>%
+# Take only the emphatic condition
+  filter(emphasis=="normal") %>%
+# Extract the r and store column
+  select(r, store) %>%
+# Add a column "praise" in which you store the string "Labov rocks!"
+  mutate(praise="Labov rocks!")
+# Compute the number of rows of the resulting dataSet
+nrow(dataSet)
+# Compute the number columns of the resulting dataSet
+ncol(dataSet)
+```
+
+```{r ex="explore2", type="sct"}
+test_output_contains("nrow(dataSet)", incorrect_msg = "Make sure to print the number of rows")
+test_output_contains("ncol(dataSet)", incorrect_msg = "Make sure to print the number of columns")
+success_msg("Great!")
+```
+
+
+## 3.Recoding data: Revisiting `mutate` with extra functions
+
+```{r ex="factors2", type="pre-exercise-code"}
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+library(readr)
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv") 
+```
+
+```{r ex="factors2", type="sample-code"}
+# The data.frame dataSet is already in your workspace. 
+# Load the dplyr package
+
+# The `state` column has quite some duplicates: 
+# "Andalucía" and "Andalusia", "Aragon" and "Aragón", "Castile-La Mancha" and "Castilla-La-Mancha", "Castile and León" and "Castilla y León", "Catalonia" and "Cataluña", "Community of Madrid" and "Comunidad de Madrid", "Valencian Community" and "Comunidad Valenciana", "Basque Country" and "País Vasco"
+# Recode all Spanish names to their English alternative
+
+# Print all unique values of state column
+unique(dataSet$state)
+
+# The column 'Typical.Action.Chain.Pos' has a somwhat technical coding: "head" vs "tail.setting". To make it less technical, replace the period (".") by the string " and "
+
+# Print all unique values of the Typical.Action.Chain.Pos column
+unique(dataSet$Typical.Action.Chain.Pos)
+```
+
+```{r ex="factors2", type="solution"}
+# The data.frame dataSet is already in your workspace. 
+# Load the dplyr package
+library(dplyr)
+# The state column has quite some duplicates: 
+# "Andalucía" and "Andalusia","Aragón" and "Aragon","Castilla-La-Mancha" and "Castile-La Mancha", "Castilla y León" and "Castile and León", "Cataluña" and "Catalonia", "Comunidad de Madrid" and "Community of Madrid", "Comunidad Valenciana" and "Valencian Community", "País Vasco" and "Basque Country"
+# Recode all Spanish names to their English alternative
+dataSet <- dataSet %>%
+  mutate(state=recode(dataSet$state, "Andalucía"="Andalusia" ,"Aragón" = "Aragon","Castilla-La-Mancha"= "Castile-La Mancha", "Castilla y León"="Castile-and-León", "Cataluña"="Catalonia", "Comunidad de Madrid"="Community of Madrid", "Comunidad Valenciana"="Valencian Community", "País Vasco"="Basque Country"))
+# Print all unique values of state column
+unique(dataSet$state)
+# The column 'Typical.Action.Chain.Pos' has a somwhat technical coding: "head" vs "tail.setting". To make it less technical, replace the period (".") by the string " and "
+dataSet <- dataSet %>%
+  mutate(Typical.Action.Chain.Pos=stri_replace_all_fixed(Typical.Action.Chain.Pos, ".", " and "))
+# Print all unique values of the Typical.Action.Chain.Pos column
+unique(dataSet$Typical.Action.Chain.Pos)
+```
+
+```{r ex="factors2", type="sct"}
+test_library_function("dplyr", incorrect_msg="Make sure to load the dplyr package!")
+test_output_contains('unique(dataSet$state)',  incorrect_msg = "Make sure to print the unique values of the 'state' column!")
+test_output_contains('unique(dataSet$Typical.Action.Chain.Pos)',  incorrect_msg = "Make sure to print the unique values of the 'Typical.Action.Chain.Pos' column!")
+success_msg("Great!")
+```

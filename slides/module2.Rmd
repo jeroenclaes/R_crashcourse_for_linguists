@@ -9,7 +9,7 @@ output:
   html_document:
     toc: no
   word_document:
-   toc: no
+    toc: no
 ---
   
 ```{r setup, include=FALSE}
@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, eval=TRUE, message=FALSE, warning=FALSE, erro
 library(pander)
 library(knitr)
 library(tibble)
+library(dplyr)
 ```
 
 
@@ -30,13 +31,13 @@ library(tibble)
 
 ## In this module
 - How to view tabular data
-- How to manipulate tabular data
+- How to select, filter, mutate, and recode tabular data
 - How to export tabular data
 
-# Data frames | The R alternative to Excel spreadsheets
+## Data frames: The R alternative to Excel spreadsheets
 
 ## Data frames
-- Up until now we have focused on getting data into R, but we haven't really played around yet with the resulting objects
+- In the previous module we learned how to get data into R, but we haven't really played around with it yet
 - When you load a CSV or an Excel file into R, the resulting object is a `data.frame`:
     - A collection of vectors of the same length
     - Each vector is a column
@@ -47,7 +48,7 @@ library(tibble)
 
 ```{r dataStructure, eval=TRUE}
 library(readr)
-dataSet <- read_csv("http://www.jeroenclaes.be/statistics_for_linguistics/datasets/class3_claes_2017.csv")
+dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 str(dataSet)
 ```
 
@@ -99,32 +100,32 @@ summary(dataSet)
     - How to inspect the first couple of rows of a dataframe
     - How to inspect the last couple of rows of a dataframe
     - How to print a summary of a dataframe
-- Please perform the exercise http://www.jeroenclaes.be/statistics_for_linguistics/class2.html (until `Exploring data.frames(1/2)`)
+- There's a first exercise waiting for you at: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module2.html, under *1. Exploring data frames*
 
-# Dplyr | A grammar of data manipulation
+## Dplyr: A grammar of data manipulation
 
-## Brief introduction to Dplyr (1/4)
+## Brief introduction to `dplyr` (1/4)
 - The R package Dplyr has two goals:
     - Providing a faster, less technical way of manipulating dataframes
     - Making your code easier to read, write, and understand by introducing a set of functions/verbs that look like plain English
     - We will consider:
         - `filter()` picks rows based on their values
-        - `mutate()` adds new columns that are functions of existing variables
+        - `mutate()` adds new columns that are transformations of existing columns
         - `select()` picks columns based on their names
 
-## Brief introduction to Dplyr (2/4)
+## Brief introduction to `dplyr` (2/4)
 - To improve the readability of code, `Dplyr` promotes the use of pipes, written `%>%`
 - `%>%` takes the return value of the expression on its left-hand side and passes it to the expression on its right-hand side
-- This way, you never have to write nested function calls. Rather, you can simply write a series of commands, which pass the data from one function to the next
+- This way, you never have to write nested commands. Rather, you can simply write a series of commands, which pass the data from one function to the next
 
-## Brief introduction to Dplyr (3/4)
+## Brief introduction to `dplyr` (3/4)
 - A quick example will show the difference
 - Without pipes, it is harder to see what operations we are performing on the build-in `iris` dataset
 ``` {r nopipe}
 head(tail(iris), 2)
 ```
 
-## Brief introduction to Dplyr (4/4)
+## Brief introduction to `dplyr` (4/4)
 - A quick example will show the difference
 - With pipes, the workflow immediately becomes clear:
     - Take the iris dataset
@@ -138,11 +139,11 @@ iris %>%
 ```
 
 
-# Basic `dplyr` verbs 
+## Basic `dplyr` verbs 
 
 ## Basic `dplyr` verbs: `filter` (1/3)
 - The function  `filter` applies a filter to a dataframe. It returns only those rows for which a particular condition evaluates `TRUE`
-- Here we extract only the rows for customer `67691762`
+- Here we extract only the rows for the Twitter `corpus`
 ``` {r filter}
 library(dplyr)
 dataSet %>% 
@@ -161,7 +162,7 @@ dataSet %>%
     - `>` - "larger than"
     - `>=` - "larger than or equal to"
     - `%in%`  - "one of list" (e.g., `filter(province %in% c("Cádiz", "Barcelona", "Asturias"))`)
-    - `%in%` with NOT operator (e.g., `filter(!customer %in% c("Cádiz", "Barcelona", "Asturias"))`) - "not one of list"
+    - `%in%` with NOT operator (e.g., `filter(!province %in% c("Cádiz", "Barcelona", "Asturias"))`) - "not one of list"
 
 ## Basic `dplyr` verbs: `mutate` (1/3)
 - The function `mutate` can be used to create new columns or change the values of existing columns
@@ -207,19 +208,19 @@ dataSet %>%
     - How to filter a dataframe using one or more conditions
     - How to add or alter columns in a dataframe
     - How to select columns from a dataframe using a list of column names, a negative list of column names, or partial matches
+- There's an exercise waiting for you at: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module2.html, under *2. Basic dplyr verbs*
 
-
-[[Excercises!!]]
-
-
-# Recoding data | Revisiting `mutate` with extra functions
+## Recoding data: Revisiting `mutate` with extra functions
 ## Recoding data: `recode`
 - Often you will find data values that are not very useful for your analysis, or you just want to try out something different
 - The `dplyr`function `recode` allows you to specify a `old value` ==> `new value` mapping. This function can be used with `mutate` to make changes to the values of columns
 
 ```{r recode}
 dataSet %>%
-  mutate(broad.regions_recoded=recode(broad.regions, "East"="Perifery", "West"="Perifery", "South"="Perifery")) %>%
+  mutate(broad.regions_recoded=recode(broad.regions, "East"="Perifery", 
+                                      "West"="Perifery", 
+                                      "South"="Perifery")) %>%
+  select(broad.regions) %>%
   head()
 ```
 
@@ -241,11 +242,10 @@ dataSet %>%
 - In this part we have learned:
     - How to recode columns, by manually specifying new values for existing values
     - How to perform find/replace for fixed strings with `stringi`
-- There's an exercise waiting for you on the data science platform: `2.Data manipulation with tidyr and dplyr - Recoding data`
+- There's an exercise waiting for you at: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module3.html, under  *3.Recoding data: Revisiting `mutate` with extra functions*
 
 
-
-# Exporting data from R | Writing CSV and Excel files
+## Exporting data from R | Writing CSV and Excel files
 ## Exporting data from R: CSV files (1/2)
 - Once you have read/manipulated a data table into R memory, you can also write it back out to a file
 - To this end, we can use the `write_csv`, `write_csv2`, `write_tsv` or `write_delim` functions from the `readr` package
@@ -261,8 +261,6 @@ dataSet <- read_excel("datasets/corpus_futuro.xlsx", sheet = 1) %>%
 write_csv(dataSet, "corpus_futuro.csv")
 ```
 
-
-
 ## Exporting data from R: Excel files (1/3)
 - To export a data table to an Excel file, the `writexl` package is required
 
@@ -270,7 +268,6 @@ write_csv(dataSet, "corpus_futuro.csv")
 install.packages("writexl")
 library(writexl)
 ```
-
 
 ## Exporting data from R: Excel files (2/2)
 - The syntax of this function is modeled after the `write_*` functions of the `readr` package
@@ -313,7 +310,7 @@ load("corpus.rdata-*")
     - To Excel files
     - To `.rdata` files
 
-# Module overview and module-final project
+## Module overview and module-final project
 ## Module overview 
 - In this module, we have covered:
     - How to explore dataframes
@@ -335,6 +332,6 @@ load("corpus.rdata-*")
     - Perform any recoding you may need to do 
     - Save your modified dataset as a Rdata file, an Excel file, and a CSV file
     
-# Further reading
+## Further reading
 ## Further reading (Free!)
 - Grolemund, G., & Wickham, H. (2017). *R for data science: Visualize, model, transform, tidy, and import data*. New York, NY: O'Reilly. https://r4ds.had.co.nz/. 

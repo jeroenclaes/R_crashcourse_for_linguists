@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, eval=TRUE, message=FALSE, warning=FALSE, erro
 library(pander)
 library(knitr)
 library(tibble)
+library(dplyr)
 ```
 
 
@@ -34,10 +35,10 @@ library(tibble)
 ## About this course (2/2)
 - Method:
     - Code demonstrations/discussion. We will use datasets from (my) earlier research for the demonstrations 
-    - You will perform the exercises in a controlled environment on http://www.jeroenclaes.be/statistics_for_linguistics. The links to the labs will be on the slides
+    - You will perform the exercises in a controlled environment on the companion site, http://www.jeroenclaes.be/r_crashcourse_for_linguists. The links to the labs will be on the slides
     - You will perform the Module-final projects with your *own dataset* on your own machine. 
-    - The Module-final projects add up to a completely finished script that answers the research question you brought with you
-- You'll walk away with: 
+    - The Module-final projects add up to a completely finished script that should answer the research question you brought with you
+- **You'll walk away with**: 
     - A solid understanding of how to load, manipulate, explore and report on data with R
     - A finished script that analyzes the research question you defined 
 
@@ -92,11 +93,12 @@ library(RColorBrewer)
 RColorBrewer::brewer.pal()
 ```
 
-## Taking stock
+## Taking stock and exercises
 - In this part we have learned:
     - How to install packages
     - How to load packages
     - How to consult the documentation of functions
+- Please go to http://www.jeroenclaes.be/r_crashcourse_for_linguists and perform the exercises under *1. Installing and loading packages*
 
 ## Programming 101
 
@@ -162,9 +164,15 @@ numbers -2
 numbers +2
 ```
 
-## Programming 101: Vectors: the basic data structure in R (4/4)
-- It is generally **unnecessary** to write loops in R to iterate over the different elements of a vector to get things done
-- There's a first exercise waiting for you at: http://www.jeroenclaes.be/statistics_for_linguistics/class1.html
+## Taking stock and exercises
+
+- In this part we have learned:
+    - What objects are
+    - What variables are
+    - How to assign variables
+    - How to create vectors
+    - How to perform basic mathematical operations with vectors
+- There's a second exercise waiting for you at: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html, under *2. Objects and vectors*
 
 ## Reading data into R | Importing CSV and Excel files 
 
@@ -185,7 +193,7 @@ numbers +2
     
 ## CSV files: a necessary evil (3/3)
 - Out of the box, R assumes the cross-platform UTF-8 encoding standard
-- This means that if you read a ISO-8559-1-encoded CSV file without specifying the encoding, all non-ASCII characters (e.g., `é`) will look weird
+- This means that if you read a ISO-8559-1-encoded CSV file without specifying the encoding, all non-ASCII characters (e.g., `é,ñ,ç`) will look weird
 - Let us first take a look at how you can load a UTF-8 encoded CSV file, keeping the encoding issue for later
 
 ## The `readr` package (1/2)
@@ -242,7 +250,10 @@ guess_encoding("http://www.jeroenclaes.be/statistics_for_linguistics/datasets/cl
 - To change the locale for your file, you can assign the result of the `locale` function to the `locale` argument of the `readr` functions
 - The following ficticious example would read a ISO-8859-1 file, in which commas are used as decimal separators, and full stops are used as thousand separators
 ```{r fileWithBadEncoding, eval=FALSE}
-dataSet <- read_csv2("someFile.csv", locale=locale(encoding="ISO-8859-1", decimal_mark = ",",grouping_mark = "."))
+dataSet <- read_csv2("someFile.csv", 
+                     locale=locale(encoding="ISO-8859-1", 
+                                   decimal_mark = ",",
+                                   grouping_mark = "."))
 ```
 
 ## Taking stock 
@@ -250,6 +261,7 @@ dataSet <- read_csv2("someFile.csv", locale=locale(encoding="ISO-8859-1", decima
     - How to import different types of CSV files into R, using functions provided by the `readr` package
     - How to detect the encoding of a CSV file
     - How to specify the locale settings of a CSV file
+- There's an exercise on importing CSV data waiting for you at: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html, under *3. Loading data from CSV*
 
 ## Reading data into R: Excel files
 - While CSV files are common, most organizations have much data sitting in Excel files
@@ -269,9 +281,8 @@ install.packages("readxl")
 
 ```{r readCodeXlsx, eval=TRUE}
 library(readxl)
-dataSet <- read_excel("datasets/corpus_futuro.xlsx", sheet = 1)
+dataSet <- read_excel("../datasets/corpus_futuro.xlsx", sheet = 1)
 ```
-
 
 ## Taking stock
 - In this part we've learned:
