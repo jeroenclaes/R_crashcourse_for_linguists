@@ -1,5 +1,5 @@
 # R_crashcourse_for_linguists
-Slides, labs, and materials for the R crashcourse for linguists I will be teaching in on June 7 &amp; 14, 2019 at Antwerp University. The rendered documents are hosted at: http://jeroenclaes.be/r_crashcourse_for_linguists
+Slides, labs, and materials for the R crashcourse for linguists I will be teaching in on June 7 &amp; 14, 2019 at Antwerp University. 
 
 The rendered files are hosted at:
 
