@@ -241,7 +241,7 @@ c / b
 
 ### 3. Loading data from CSV
 
-```{r ex="create_a", type="sample-code"}
+```{r ex="loadData", type="sample-code"}
 # Load the readr package
 
 # Load the course data from the course website to the object 'dataSet':
@@ -255,7 +255,7 @@ glimpse(dataSet)
 
 ```
 
-```{r ex="create_a", type="solution"}
+```{r ex="loadData", type="solution"}
 # Load the readr package
 library(readr)
 # Load the course data from the course website to the object 'dataSet':
@@ -265,11 +265,11 @@ dataSet <- read_csv("http://www.jeroenclaes.be/statistics_for_linguistics/datase
 # Load dplyr
 library(dplyr)
 
-# Print a 'glimpse' of the dataset to inspect its structure
+# The function 'glimpse' from the dplyr package will print the first copule of rows of the resulting data table as a list
 glimpse(dataSet)
 ```
 
-```{r ex="create_a", type="sct"}
+```{r ex="loadData", type="sct"}
 
 ex() %>% check_object("dataSet") %>% check_equal()
 ex() %>% check_library("dplyr")

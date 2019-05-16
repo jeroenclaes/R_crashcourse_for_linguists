@@ -22,7 +22,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="factors1", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column state to a factor
 
@@ -31,7 +31,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="factors1", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column state to a factor
 dataSet<- dataSet %>% 
@@ -50,11 +50,12 @@ success_msg("Great!")
 ```{r ex="factors3", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="factors3", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 
@@ -67,7 +68,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="factors3", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 dataSet <- dataSet %>%
@@ -92,11 +93,12 @@ success_msg("Great!")
 ```{r ex="counts_negation_freq", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="counts_negation_freq", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column negation to a factor
 
@@ -110,7 +112,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="counts_negation_freq", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column negation to a factor
 dataSet <- dataSet %>%
@@ -134,11 +136,12 @@ success_msg("Great!")
 ```{r ex="counts_province", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="counts_province", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column province to a factor
 
@@ -152,7 +155,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="counts_province", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column province to a factor
 dataSet <- dataSet %>%
@@ -176,11 +179,12 @@ success_msg("Great!")
 ```{r ex="proportionsTypical.Action.Chain.Pos", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="proportionsTypical.Action.Chain.Pos", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column Typical.Action.Chain.Pos to a factor
 
@@ -194,7 +198,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="proportionsTypical.Action.Chain.Pos", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column Typical.Action.Chain.Pos to a factor
 dataSet <- dataSet %>%
@@ -217,11 +221,12 @@ success_msg("Great!")
 ```{r ex="proportionscorpus1", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="proportionscorpus1", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 
@@ -236,7 +241,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="proportionscorpus1", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 dataSet <- dataSet %>%
@@ -265,11 +270,12 @@ success_msg("Great!")
 ```{r ex="freq1", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="freq1", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 
@@ -278,7 +284,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="freq1", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 dataSet <- dataSet %>%
@@ -297,11 +303,12 @@ success_msg("Great!")
 ```{r ex="freq2", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="freq2", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 
@@ -312,7 +319,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="freq2", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 dataSet <- dataSet %>%
@@ -336,11 +343,12 @@ success_msg("Great!")
 ```{r ex="broad.regions_1", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="broad.regions_1", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column broad.regions to a factor
 
@@ -349,7 +357,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="broad.regions_1", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column broad.regions to a factor
 dataSet <- dataSet %>% 
@@ -369,11 +377,12 @@ success_msg("Great!")
 ```{r ex="broad.regions", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="broad.regions", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column broad.regions to a factor
 
@@ -384,7 +393,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="broad.regions", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column broad.regions to a factor
 dataSet <- dataSet %>% 
@@ -408,11 +417,12 @@ success_msg("Great!")
 ```{r ex="prop2", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="prop2", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 
@@ -423,7 +433,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="prop2", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column corpus to a factor
 dataSet <- dataSet %>%
@@ -448,11 +458,12 @@ success_msg("Great!")
 ```{r ex="broad.regions_1", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="broad.regions_1", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column broad.regions to a factor
 
@@ -461,7 +472,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="broad.regions_1", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column broad.regions to a factor
 dataSet <- dataSet %>% 
@@ -481,11 +492,12 @@ success_msg("Great!")
 ```{r ex="broad.regions_prop", type="pre-exercise-code"}
 Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
 library(readr)
+library(dplyr)
 dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/class3_claes_2017.csv")
 ```
 
 ```{r ex="broad.regions_prop", type="sample-code"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column broad.regions to a factor
 
@@ -496,7 +508,7 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 ```
 
 ```{r ex="broad.regions_prop", type="solution"}
-# The data.frame dataSet is already in your workspace. 
+# The data.frame dataSet is already in your workspace. The dplyr package is already loaded
 
 # Convert the column broad.regions to a factor
 dataSet <- dataSet %>% 

@@ -102,6 +102,9 @@ summary(dataSet)
 - There's a first exercise waiting for you at: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module2.html, under *1. Exploring data frames*
 
 ## Dplyr: A grammar of data manipulation
+<div style="width:30%; height:30%;float:right">
+![](https://d33wubrfki0l68.cloudfront.net/071952491ec4a6a532a3f70ecfa2507af4d341f9/c167c/images/hex-dplyr.png)
+</div>
 
 ## Brief introduction to `dplyr` (1/4)
 - The R package Dplyr has two goals:
@@ -212,7 +215,7 @@ dataSet %>%
 ## Recoding data: Revisiting `mutate` with extra functions
 ## Recoding data: `recode`
 - Often you will find data values that are not very useful for your analysis, or you just want to try out something different
-- The `dplyr`function `recode` allows you to specify a `old value` ==> `new value` mapping. This function can be used with `mutate` to make changes to the values of columns
+- The `dplyr` function `recode` allows you to specify an `old value` ==> `new value` mapping. This function can be used with `mutate` to make changes to the values of columns
 
 ```{r recode}
 dataSet %>%
@@ -233,6 +236,7 @@ dataSet %>%
 ```{r stri_replace_fixed}
 library(stringi)
 dataSet %>%
+  select(state) %>%
   mutate(state=stri_replace_all_fixed(state, "ñ", "n")) %>%
   head()
 ```
@@ -255,7 +259,7 @@ dataSet %>%
 ```{r write_csv, eval=FALSE}
 library(readr)
 library(readxl)
-dataSet <- read_excel("datasets/corpus_futuro.xlsx", sheet = 1) %>%
+dataSet <- read_excel("corpus_futuro.xlsx", sheet = 1) %>%
   head(5)
 write_csv(dataSet, "corpus_futuro.csv")
 ```

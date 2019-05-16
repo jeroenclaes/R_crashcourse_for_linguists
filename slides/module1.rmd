@@ -2,13 +2,13 @@
 title: 'Module 1: Introduction to R'
 author: "Jeroen Claes"
 output:
+  word_document:
+    toc: no
   revealjs::revealjs_presentation:
     css: white.css
     self_contained: no
     transition: none
   html_document:
-    toc: no
-  word_document:
     toc: no
 ---
 
@@ -34,7 +34,7 @@ library(dplyr)
 ## About this course (2/2)
 - Method:
     - Code demonstrations/discussion. We will use datasets from (my) earlier research for the demonstrations 
-    - You will perform the exercises in a controlled environment on the companion site, http://www.jeroenclaes.be/r_crashcourse_for_linguists. The links to the labs will be on the slides
+    - You will perform the exercises in a controlled environment on the companion site, https://www.jeroenclaes.be/r_crashcourse_for_linguists. The links to the labs will be on the slides
     - You will perform the Module-final projects with your *own dataset* on your own machine. 
     - The Module-final projects add up to a completely finished script that should answer the research question you brought with you
 - **You'll walk away with**: 
@@ -68,7 +68,7 @@ library(dplyr)
     - Hints objects in memory
     - Hints column names
     - Allows you to have your code and the window that executes your code side-by-side
-- The course package contains a handy cheat sheet that explains all the options and possibilities of the RStudio IDE (courtesy of RStudio, Inc.)
+- The website contains a handy cheat sheet that explains all the options and possibilities of the RStudio IDE (courtesy of RStudio, Inc.)
     
 ## Let's get our hands dirty with code!
 - From this point on, you should try to execute the code snippets I type on the screen
@@ -89,7 +89,6 @@ library(dplyr)
 install.packages("RColorBrewer")
 library(RColorBrewer)
 ?brewer.pal
-RColorBrewer::brewer.pal()
 ```
 
 ## Taking stock and exercises
@@ -97,7 +96,7 @@ RColorBrewer::brewer.pal()
     - How to install packages
     - How to load packages
     - How to consult the documentation of functions
-- Please go to http://www.jeroenclaes.be/r_crashcourse_for_linguists and perform the exercises under *1. Installing and loading packages*
+- Please go to https://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html and perform the exercises under *1. Installing and loading packages*
 
 ## Programming 101
 
@@ -117,8 +116,9 @@ a <- "hello"
     
 ## Programming 101: Objects and variables (3/4)
 - There's a few things you have to keep in mind when assigning variables:
+    - Variable names are arbitrary: any variable name can represent any object
     - Variables are case sensitive: *ab* vs. *Ab* vs. *aB*
-    - Spaces and non-ASCII characters (e.g., *hé* ) are not allowed in variable names
+    - Spaces and characters that do not occur in the English alphabet (e.g., *hé* ) are not allowed in variable names
     - Variable names cannot start with a number (e.g., `3b`)
     - **BUT** if you wrap your variable names with backticks *``*, all of this **IS** allowed
     
@@ -141,7 +141,6 @@ a*b
 - Up until now, we have only considered variables that store just one piece of information (e.g., a single number, *1*)
 - Most often, we will deal with variables that contain multiple bits of information, e.g., a list of values such as *a, b, c*
 - In R, these are called `vectors`. In fact, everything in R is a vector
-- The types of variables we have considered up until now (scalars) are just vectors of length 1!
 
 ## Programming 101: Vectors: the basic data structure in R (2/4)
 - The basic vector-creating function in R is `c()` (from **c***ombine*)
@@ -158,9 +157,9 @@ numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
 ```{r vectorizedOps}
 numbers <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-numbers *2
-numbers -2
-numbers +2
+numbers * 2
+numbers - 2
+numbers + 2
 ```
 
 ## Taking stock and exercises
@@ -171,38 +170,33 @@ numbers +2
     - How to assign variables
     - How to create vectors
     - How to perform basic mathematical operations with vectors
-- There's a second exercise waiting for you at: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html, under *2. Objects and vectors*
+- There's a second exercise waiting for you at: https://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html, under *2. Objects and vectors*
 
-## Reading data into R | Importing CSV and Excel files 
+## Importing tabular data into R: CSV files and Excel files
 
-## CSV files: a necessary evil (1/3)
-- CSV (comma-separated values) files are a widely used data format to exchange datasets between platforms and systems
-- CSV files are very useful, but they can also be annoying:
-    - Fields that are not separated properly
-    - Delimiter characters that are used within fields without quoting
-    - Decimal separators that vary from locale to locale
-    - Encoding issues (the translation between bits and human-readable characters)
+## CS-what? (1/2)
+- Question: What are CSV files?
 
-## CSV files: a necessary evil (2/3)
-- The last one is especially common, as there's hundreds of encoding options out there, depending on the user's locale
-- Just some quick examples of the variety of encodings that are out there:
-    - On Windows, Excel will produce CP-1252 or ISO-8559-1 encoded CSV files
-    - Older versions of Excel for Mac would produce Mac-Roman encoding
-    - Newer versions of Excel for Mac use UTF-8 (Unicode)
-    
-## CSV files: a necessary evil (3/3)
-- Out of the box, R assumes the cross-platform UTF-8 encoding standard
-- This means that if you read a ISO-8559-1-encoded CSV file without specifying the encoding, all non-ASCII characters (e.g., `é,ñ,ç`) will look weird
-- Let us first take a look at how you can load a UTF-8 encoded CSV file, keeping the encoding issue for later
+## CS-what? (2/2)
+- What are comma-separated files:
+    - Text file format
+    - Colums are separated by separator character (`,` or other)
+    - Rows are delimited by line endings
+- Very common fileformat to exchange data between different systems (e.g., database, Excel, R)
 
-## The `readr` package (1/2)
-- R has build-in CSV readers (the functions `read.csv`, `read.csv2`, `read.tsv` and `read.delim`), but these are slow, inflexible and not fault-tolerant
-- It is better to use the `readr` package, which is much faster, more flexible, and more fault-tolerant
-```{r installReader, eval=FALSE}
+## The `readr` package (1/3)
+- R has build-in CSV parsers, but these are slow and not fault-tolerant
+- We will use the `readr` package instead 
+<div style="float:right; width: 30%; height:30%">
+![](https://github.com/tidyverse/readr/raw/master/man/figures/logo.png)
+
+## The `readr` package (2/3)
+- Remember, before we can use add-on packages in R, we have to install them first
+```{r inst_readr, echo = TRUE, eval=F}
 install.packages("readr")
 ```
 
-## The `readr` package (2/2)
+## The `readr` package (3/3)
 - The `readr` package has four main reader functions, which accept the same set of arguments:
     - `read_csv`: read comma-separated files
     - `read_csv2`: read semicolon-separated files
@@ -224,17 +218,43 @@ library(dplyr)
 glimpse(dataSet)
 ```
 
-## Dealing with encoding (and other locale issues) (1/4)
-- Sometimes you will receive a file from a colleague and it's impossible to know what encoding it is in
-- For cases like that, `readr` includes a function (`guess_encoding`) that determines the most likely encoding of a file
-- Here we find that the most likely encoding is *ASCII* (which is a subset of UTF-8, the default), so we don't have to specify it explicitly
+## Character encoding, decimal separator, and thousand separator
 
-```{r guessencoding}
-guess_encoding("http://www.jeroenclaes.be/statistics_for_linguistics/datasets/class3_claes_2017.csv")
-```
+## Character encoding, decimal separator, and thousand separator (1/9)
+- CSV files are very useful, but they vary from one culture to the next:
+    - Thousand separators
+    - Decimal separators that vary from culture to culture
+    - Character encoding formats
+
+## Character encoding, decimal separator, and thousand separator: text encoding (2/9)
+- Question: What is text encoding?
+    A) The translation between bits and human-readable characters
+    B) The language in which the text was written
+    C) Accents on letters, such as `~`, `´`
+
+## Character encoding, decimal separator, and thousand separator: text encoding (3/9)
+- Question: What is text encoding?
+    A) **The translation between bits/bytes and human-readable characters**
+    B) The language in which the text was written
+    C) Accents on letters, such as `~`, `´`
+
+## Character encoding, decimal separator, and thousand separator: text encoding (4/9)
+- Encoding issues are very common, as there's hundreds of encoding options out there, depending on the user's language and geographic location
+- Just some quick examples of the variety of encodings that are out there:
+    - On Windows, Excel will produce `CP-1252` or `ISO-8559-1` encoded CSV files in Western Europe
+    - Older versions of Excel for Mac would produce `Mac-Roman` encoding in Western Europe
+    - Newer versions of Excel for Mac use `UTF-8` (Unicode)
     
-## Dealing with encoding (and other locale issues) (2/4)
-- When you do want to specify the encoding of a file, you can do so by defining a **locale** for your file
+## Character encoding, decimal separator, and thousand separator: text encoding (5/9)
+- The letters of the English alphabet have the same codes in all encodings
+- For characters that do not occur in English, the codes differ from encoding to encoding
+
+## Character encoding, decimal separator, and thousand separator: text encoding (6/9)
+- Out of the box, R assumes the cross-platform `UTF-8` encoding standard
+- This means that if you read a `ISO-8559-1`-encoded CSV file without specifying the encoding, all characters that do not occur in English (e.g., `é`, `ñ`) will not be rendered properly
+
+## Character encoding, decimal separator, and thousand separator (7/9)
+- When you do want to specify the encoding of a file and other culture-specific settings for `read_csv`, you can do so by defining a **locale** for your file
 - Think about a locale as a complete specification of all culture/country-specific aspects of a file:
     - date names
     - date formatting
@@ -243,9 +263,15 @@ guess_encoding("http://www.jeroenclaes.be/statistics_for_linguistics/datasets/cl
     - thousand separator
     - time zone
     - encoding
-- Of course you do not have to specify all of these aspects to change just the encoding, but know that these options are available
+    
+## Character encoding, decimal separator, and thousand separator (8/9)
+- Of course you do not have to specify all of these settings, but know that these options are available
+- Here we'll focus on just three aspects:
+    - encoding
+    - thousand separator
+    - decimal separator
 
-## Dealing with encoding (and other locale issues) (3/4)
+## Character encoding, decimal separator, and thousand separator (9/9)
 - To change the locale for your file, you can assign the result of the `locale` function to the `locale` argument of the `readr` functions
 - The following ficticious example would read a ISO-8859-1 file, in which commas are used as decimal separators, and full stops are used as thousand separators
 ```{r fileWithBadEncoding, eval=FALSE}
@@ -258,9 +284,10 @@ dataSet <- read_csv2("someFile.csv",
 ## Taking stock 
 - In this part we have learned:
     - How to import different types of CSV files into R, using functions provided by the `readr` package
-    - How to detect the encoding of a CSV file
-    - How to specify the locale settings of a CSV file
-- There's an exercise on importing CSV data waiting for you at: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html, under *3. Loading data from CSV*
+    - How to specify the character encoding, decimal separator, and thousand separator settings of a CSV file
+- There's an exercise on importing CSV data waiting for you at: https://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html, under *3. Loading data from CSV*
+
+## Reading data into R: Excel files
 
 ## Reading data into R: Excel files
 - While CSV files are common, most organizations have much data sitting in Excel files
@@ -273,14 +300,15 @@ install.packages("readxl")
 ## The `readxl` package (1/4)
 - For most use cases, the `read_excel` function will do everything you need to do
 - It automatically detects the difference between `.xls` and `.xlsx`, based on the file extension
-- If you want to specify the file type yourself (e.g., when the extension is wrong), use the functions `read_xlsx` and `read_xls` accordingly
 
 ## The `readxl` package (2/4)
-- The following line will import the first sheet from the `sales.xlsx` file in your `demonstration_data` folder
+- The following code will download the file `corpus_futuro.xlsx` and it will read the first sheet from the file 
 
 ```{r readCodeXlsx, eval=TRUE}
 library(readxl)
-dataSet <- read_excel("../datasets/corpus_futuro.xlsx", sheet = 1)
+download.file("https://www.jeroenclaes.be/r_crashcourse_for_linguists/datasets/corpus_futuro.xlsx",
+              "corpus_futuro.xlsx")
+dataSet <- read_excel("corpus_futuro.xlsx", sheet = 1)
 ```
 
 ## Taking stock
@@ -301,4 +329,5 @@ dataSet <- read_excel("../datasets/corpus_futuro.xlsx", sheet = 1)
     - How to read Excel spreadsheets into R
 
 ## Module-final project
+- Open a new script file (File > New File > R Script)
 - Write a script that imports your dataset(s)

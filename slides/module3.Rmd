@@ -2,12 +2,12 @@
 title: 'Module 3: Exploring qualitative variables'
 author: "Jeroen Claes"
 output:
-  word_document:
-    toc: no
   revealjs::revealjs_presentation:
     css: white.css
     self_contained: no
     transition: none
+  word_document:
+    toc: no
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE, message=FALSE, warning=FALSE, error=FALSE, fig.height = 4, dpi = 300)
@@ -95,6 +95,7 @@ levels(dataSet$type)
 ## Frequencies: counting values
 ## Counting values
 - To describe a categorical variable, there's not much you can do except counting how many times each value occurs
+- The `$`-sign extracts one column from a data table
 - This is what the `table` function does
 ```{r table}
 table(dataSet$type)
@@ -192,7 +193,7 @@ ggplot(dataSet, aes(x=type))  +
 
 ## Plotting in `ggplot` (3/6)
 - Once we have our plotting layer(s), we can change the appearance of our plot with theme functions:
-    - All existing themes are listed on: http://ggplot2.tidyverse.org/reference/ggtheme.html
+    - All existing themes are listed on: https://ggplot2.tidyverse.org/reference/ggtheme.html
     
 
 ```{r ggplot211, eval=FALSE}
@@ -386,7 +387,7 @@ ggplot(dataSet, aes(x=type, color=type, fill=type))  +
 ## Taking stock and exercises
 - In this part you have learned:
     - How to create basic and beautiful plots for your categorical variables with ggplot2
-- Go to http://jeroenclaes.be/r_crashcourse_for_linguists/module3.html and perform the excercises under *4. Bar plots*
+- Go to https://jeroenclaes.be/r_crashcourse_for_linguists/module3.html and perform the exercises under *4. Bar plots*
 
 ## Taking stock and Module-final project
 - In this module we have covered the following topics:
@@ -396,9 +397,6 @@ ggplot(dataSet, aes(x=type, color=type, fill=type))  +
     - How to convert counts into percentages
     - How to draw nicely formatted barplots for counts and percentages
 - For your module-final project, return to your script file and write code to extract the counts, percentages, and plots that you need to explore your research question with your data
-
-## Questions?
-- ???
 
 ## References
 - Claes, J. (2017). Cognitive and geographic constraints on morphosyntactic variation: The variable agreement of presentational haber in Peninsular Spanish. *Belgian Journal of Linguistics* (31), 28-53.

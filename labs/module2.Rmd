@@ -115,7 +115,7 @@ success_msg("Great!")
 
 ```
 
-```{r ex="explore2", type="solution"}
+```{r ex="dplyr", type="solution"}
 # Load the readr package
 library(readr)
 # Load the course data from the course website to the object 'dataSet':
@@ -141,7 +141,7 @@ nrow(dataSet)
 ncol(dataSet)
 ```
 
-```{r ex="explore2", type="sct"}
+```{r ex="dplyr", type="sct"}
 test_output_contains("nrow(dataSet)", incorrect_msg = "Make sure to print the number of rows")
 test_output_contains("ncol(dataSet)", incorrect_msg = "Make sure to print the number of columns")
 success_msg("Great!")
@@ -160,6 +160,8 @@ dataSet <- read_csv("http://www.jeroenclaes.be/r_crashcourse_for_linguists/datas
 # The data.frame dataSet is already in your workspace. 
 # Load the dplyr package
 
+# Load the stringi package
+
 # The `state` column has quite some duplicates: 
 # "Andalucía" and "Andalusia", "Aragon" and "Aragón", "Castile-La Mancha" and "Castilla-La-Mancha", "Castile and León" and "Castilla y León", "Catalonia" and "Cataluña", "Community of Madrid" and "Comunidad de Madrid", "Valencian Community" and "Comunidad Valenciana", "Basque Country" and "País Vasco"
 # Recode all Spanish names to their English alternative
@@ -177,6 +179,8 @@ unique(dataSet$Typical.Action.Chain.Pos)
 # The data.frame dataSet is already in your workspace. 
 # Load the dplyr package
 library(dplyr)
+# Load the stringi package
+library(stringi)
 # The state column has quite some duplicates: 
 # "Andalucía" and "Andalusia","Aragón" and "Aragon","Castilla-La-Mancha" and "Castile-La Mancha", "Castilla y León" and "Castile and León", "Cataluña" and "Catalonia", "Comunidad de Madrid" and "Community of Madrid", "Comunidad Valenciana" and "Valencian Community", "País Vasco" and "Basque Country"
 # Recode all Spanish names to their English alternative
@@ -193,6 +197,8 @@ unique(dataSet$Typical.Action.Chain.Pos)
 
 ```{r ex="factors2", type="sct"}
 test_library_function("dplyr", incorrect_msg="Make sure to load the dplyr package!")
+test_library_function("stringi", incorrect_msg="Make sure to load the stringi package!")
+
 test_output_contains('unique(dataSet$state)',  incorrect_msg = "Make sure to print the unique values of the 'state' column!")
 test_output_contains('unique(dataSet$Typical.Action.Chain.Pos)',  incorrect_msg = "Make sure to print the unique values of the 'Typical.Action.Chain.Pos' column!")
 success_msg("Great!")

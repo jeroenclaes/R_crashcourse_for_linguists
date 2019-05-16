@@ -80,14 +80,44 @@ prop.table(tab, 2)
 ## Taking stock and exercises
 - In this part you have learned:
     - How to create a contingency table
-- There's a first excercise waiting for you at : http://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html, under *1. Loading and exploring the data*, *2.1 Frequency of /r/ by store*, *3.1 Frequency of /r/ by emphasis*, and *4.1 Frequency of /r/ by word*
+- There's a first excercise waiting for you at : https://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html, under *1. Loading and exploring the data*, *2.1 Frequency of /r/ by store*, *3.1 Frequency of /r/ by emphasis*, and *4.1 Frequency of /r/ by word*
 
-##  Chi-square test of independence
+## Inferential statistics and hypothesis testing
+
+## Inferential statistics and hypothesis testing
+- Inferential statistics tries to infer a property of a population by studying a sample
+- Most often, we try to test a hypothesis about a property of a population by analyzing a sample
+
+## Hypothesis testing (1/3)
+- Before collecting data it is important to have:
+    1. A research question: 
+    - *Does the verb tense affect the occurrence rates of pluralized existential* haber *in Peninsular Spanish?* 
+    2. Hypotheses: (theoretically motivated) tentative answers to these research questions: 
+        - *The verb tense conditions the occurrence rates of pluralized existential* haber *in Peninsular Spanish* 
+
+## Hypothesis testing (2/3)
+- Each hypothesis (called *alternative hypothesis*) has its *null hypothesis*:  
+    - *There is no effect of the verb tense on the occurrence rates of pluralized existential* haber *in Peninsular Spanish* 
+- A hypothesis test tries to estimate the probability of obtaining the observed or more extreme results assuming the null hypothesis
+- This way, it tries to establish wheather the difference between the groups 
+    - is reliably large
+    - is larger than would be predicted by chance
+
+##  Hypothesis tests for associations between qualitative variables
 ##  Chi-square test of independence 
-- The table shows that there is a sizeable difference between the frequencies of the singular and the plural existential in clauses with and without negation
+- The following table shows that there is a sizeable difference between the frequencies of the singular and the plural existential the two tense groups
+
+```{r table3a, eval=TRUE}
+# 'x' axis first (groups/independent variable), then 'y' axis (dependent variable)
+tab<-table(dataSet$tense, dataSet$type)
+# proportions by row
+prop.table(tab, 1)
+```
+
+##  Chi-square test of independence 
 - But is this difference reliably large? To test this, we need to perform a `Chi-squared test of independence`
 - The `null hypothesis` of this test is that there is no association between the variables:
-    - *There is no influence of the presence of negation on the occurrence rate of the singular and the plural existential*
+    - *There is no influence of the verb tense on the occurrence rate of singular and plural existential* haber
 - The test compares the `observed frequency` to the frequency you would expect by chance (`the expected frequency`) to see how likely the results are
 
 ##  Chi-square test of independence 
@@ -95,7 +125,7 @@ prop.table(tab, 2)
 - Marginal frequencies are the row and column totals
 - We can get the marginal frequencies with `rowSums` and `colSums`
 ```{r table3, eval=TRUE}
-tab <- table(dataSet$negation, dataSet$type)
+tab <- table(dataSet$tense, dataSet$type)
 colSum<- colSums(tab)
 rowSum<-rowSums(tab)
 ```
@@ -125,15 +155,14 @@ sampleSize <- sum(tab)
 ##  Performing a Chi-square test of independence in R (1/4)
 - The function `chisq.test` takes two factor or character columns as its arguments
 - It also accepts a matrix or a table of numeric values
-- You don't have to specify the directionality of the hypothesis, because it is always assumed to be two-tailed
 ```{r chisq.1, eval=TRUE}
-chisq.test(dataSet$negation, dataSet$type)
+chisq.test(dataSet$tense, dataSet$type)
 ```
  
 ##  Performing a Chi-square test of independence in R (2/4)
 - If you run the test on proportions, you end up with a p-value of 1
 ```{r chisq.3, eval=TRUE}
-chisq.test(prop.table(table(dataSet$negation, dataSet$type),2))
+chisq.test(prop.table(table(dataSet$tense, dataSet$type),2))
 ```
 
 ##  Performing a Chi-square test of independence in R (3/4)
@@ -142,17 +171,17 @@ chisq.test(prop.table(table(dataSet$negation, dataSet$type),2))
 - R will fire the following warning when this is the case:
     - `Chi-squared approximation may be incorrect`
 ```{r chisq.21, eval=TRUE}
-chisq.test(dataSet$negation, dataSet$type)$expected
+chisq.test(dataSet$tense, dataSet$type)$expected
 ```
 
 ##  Performing a Chi-square test of independence in R (4/4)
 - The `chisq.test` also provides access to the residuals, the difference between the predicted and the expected values
 - To compare the residuals in a meaningful way, they are standardized by dividing the residuals by the square root of their variance
 - If we know the values of the standardized residuals, we may gain insight into which cells contributed significantly to the p-value
-- `Standardized residuals` greater than `1.96`/smaller than `-1.96` indicate that a cell contributed significantly to the chi-squared value at the level of 0.05
+- `Standardized residuals` greater than `1.96`/smaller than `-1.96` indicate that a cell contributed significantly to the chi-squared value at p < 0.05
 - If only one "odd" table cell contributes nearly all of the chi-squared (without you expecting it to do so on theoretical grounds), there may a data imbalance issue you will have to investigate further. This is more likely to occur in larger-dimensionality tables
 ```{r chisq.2, eval=TRUE}
-chisq.test(dataSet$negation, dataSet$type)$stdres
+chisq.test(dataSet$tense, dataSet$type)$stdres
 ```    
 
 ##  Fisher-Yates exact test
@@ -163,12 +192,46 @@ fisher.test(dataSet$negation, dataSet$type)
 ```
 
 
+## About p < 0.05
+- Hypothesis tests output estimates of the probability of finding a test statistic (e.g., chi-squared value) as extreme or more extreme than the one we find assuming the null hypothesis of no association.
+- To interpret this probability, it is usually compared to a pre-defined **alpha level**:
+    - A common value is 0.05
+    - Expresses that we will accept the null hypothesis if there is a 5% probability (1/20 chance) that it is true
+- If the probability is lower than the alpha-level, we *reject* the null hypothesis 
+- If the probability is higher, we are forced to accept the null hypothesis
+- Here we find that p < 0.05, so we reject the null hypothesis: 
+    - There is less than a 5% chance of finding a result as extreme or more extreme assumping the null hypothesis of no association between negation and *haber* pluralization
+
+## About p < 0.05
+- It is important to determine your alpha-level carefully:
+    - Too strict: too many *Type I errors* (false positives: we reject the null, but it is true)
+    - Too relaxed: too many *Type II errors* (false negatives: we accept the null, but it is false)
+- For most tests, the p-value will be smaller for larger samples. For large samples you should use lower alpha-levels (0.01 or 0.001)
+
+## About p < 0.05
+- Observe that our actual hypothesis was only tested indirectly, in two ways:
+  - We do not test the hypothesis, but rather the null hypothesis
+  - We do not test the null hypothesis, but rather the probability of obtaining the same or a more extreme test statistic assuming the null hypothesis
+ 
+## A note on unethical practices
+- You will potentially make a fool out of yourself is you start comparing all possible groups in your data until you find some significant result. This is called *p-value hacking* and it is dangerous. Hypothesis testing methods become **useless** when used to do anything else than testing theoretically motivated hypotheses.
+- It is flatout unethical to tamper with your alpha-level once you have explored your results
+- p-values depend on sample size. A non-significant result may become significant with more observations. It is **unethical** to keep adding data until you reach p < 0.05 
+
+## Some common misconceptions
+- There's no 'more' or 'less' significant. Either *p < alpha* or not
+- p-values have **nothing** to do with the size of a difference between groups. Differences are **not** stronger when p-values are lower!
+- p < 0.05 does **not** mean that your results are necesarily relevant. This is why you need solid hypotheses, subject matter knowledge, and good analytical skills
+- p > 0.05 does **not** mean that your results are irrelevant.
+- p < 0.05 does **not** mean that our hypothesis is true, or that our null hypothesis is false. p < 0.05 suggests that **for our sample** there is less than a 1/20 chance of finding data that supports the null hypothesis
+
 ## Taking stock and exercises
 - In this part you have learned:
   - What the assumptions are of the Chi-squared test
   - How to perform it in R
   - When to perform a Fisher-Yates exact test
   - How to perform a Fisher-Yates exact test in R
+  - Some clarifications about p-values 
 - Please go to : http://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html, and perform the exercises under 2.2, 3.2, and 4.2 (*Validating the assumptions of the significance test*)
 
 ##  Effect sizes for relations between qualitative variables
@@ -207,7 +270,7 @@ assocstats(tab)
 - In this part you have learned:
     - What effect sizes are
     - How to compute effect sizes in R for differences between groups
-- Please go to : http://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html, and perform the exercises under 2.3, 3.3, and 4.3 (*Significance test and effect size*)
+- Please go to : https://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html, and perform the exercises under 2.3, 3.3, and 4.3 (*Significance test and effect size*)
 
 ##  Plots to explore the associations between qualitative variables 
 ##  Plots to explore the associations between qualitative variables (1/5)
@@ -265,12 +328,12 @@ ggplot(dataSet, aes(x=negation, fill=type, color=type, label=..count..)) +
 ## Taking stock and exercises
 - In this part you have learned:
     - How to draw plots to compare counts across groups
-- Please go to : http://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html, and perform the exercises under 2.4, 3.4, and 4.4 (*Plotting the differences*)
+- Please go to : https://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html, and perform the exercises under 2.4, 3.4, and 4.4 (*Plotting the differences*)
 
 ##  Reporting on associations between qualitative variables
 ##  Reporting on associations between qualitative variables
 - Contingency table
-- Test type (Chi-squared, fisher's exact)
+- Test type (Chi-squared, Fisher-Yates exact)
 - Test statistic (Chi-squared)
 - Degrees of freedom
 - Effect sizes
@@ -285,7 +348,7 @@ ggplot(dataSet, aes(x=negation, fill=type, color=type, label=..count..)) +
     - How to calculate effect sizes for relations between qualitative variables
     - How to create plots to explore the associations between qualitative variables
     - How to report on the associations between qualitative variables 
-- Please go to: http://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html and take the *5. Quiz*
+- Please go to: https://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html and take the *5. Quiz*
 
 ##  Module-final project
 - Return to your script file
