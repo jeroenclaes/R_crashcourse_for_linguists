@@ -2,12 +2,12 @@
 title: 'Module 3: Exploring qualitative variables'
 author: "Jeroen Claes"
 output:
+  word_document:
+    toc: no
   revealjs::revealjs_presentation:
     css: white.css
     self_contained: no
     transition: none
-  word_document:
-    toc: no
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE, message=FALSE, warning=FALSE, error=FALSE, fig.height = 4, dpi = 300)
@@ -22,13 +22,12 @@ dataSet <- read_csv("http://www.jeroenclaes.be/statistics_for_linguistics/datase
 
 
 ## About this course 
-- Five modules:
+- Four modules:
     - Introduction to R (Module 1)
     - Viewing, manipulating, and exporting tabular data (Module 2)
     - Exploring qualitative variables (This module)
     - Exploring the relationships between qualitative variables (Module 4)
-    - Elements of logistic regression (Module 5)
-
+    
 ## In this module
 - Factors
 - Frequencies: counting values

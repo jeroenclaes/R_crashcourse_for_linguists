@@ -15,7 +15,6 @@ The slides for the classes are available for download here:
 - [Module 2: Viewing, manipulating, and exporting tabular data](http://www.jeroenclaes.be/r_crashcourse_for_linguists/slides/module2.html)
 - [Module 3: Exploring qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/slides/module3.html)
 - [Module 4: Associations between qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/slides/module4.html)
-- [Module 5: Elements of logistic regression](http://www.jeroenclaes.be/r_crashcourse_for_linguists/slides/module5.html)
 
 ## Handouts
 A version of the slides rendered as Word documents can be found here so can you take notes more easily:
@@ -24,14 +23,13 @@ A version of the slides rendered as Word documents can be found here so can you 
 - [Module 2: Viewing, manipulating, and exporting tabular data](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module2.docx)
 - [Module 3: Exploring qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module3.docx)
 - [Module 4: Associations between qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module4.docx)
-- [Module 5: Elements of logistic regression](http://www.jeroenclaes.be/r_crashcourse_for_linguists/handouts/module5.docx)
+
 
 ## Labs
 - [Module 1: Introduction to R](http://www.jeroenclaes.be/r_crashcourse_for_linguists/module1.html)
 - [Module 2: Viewing, manipulating, and exporting tabular data](http://www.jeroenclaes.be/r_crashcourse_for_linguists/module2.html)
 - [Module 3: Exploring qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/module3.html)
 - [Module 4: Associations between qualitative variables](http://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html)
-- [Module 5: Elements of logistic regression](http://www.jeroenclaes.be/r_crashcourse_for_linguists/module5.html)
 
 
 ## R and RStudio cheat sheets (provided by RStudio)
@@ -42,13 +40,8 @@ A version of the slides rendered as Word documents can be found here so can you 
 
 ## Recommended literature (available upon request)
 - Baayen, R. H. (2008). *Analyzing Linguistic Data: A Practical Introduction to Statistics Using R.* Cambridge: Cambridge University Press.	
-- Burnham, K., & Anderson, D. (2002). *Model selection and multi-model inference: A practical information-theoretic approach*. New York, NY: Springer.
 - Field, A., Miles, J., & Field, Z. (2012). *Discovering statistics using R*. New York, NY/London: SAGE.
-- Fox, J. & Weisberg, S. (2011). *An R companion to applied regression*. Los Angeles, LA: Sage.
-- Hosmer, D., Lemeshow, S., & Sturdivant, R. (2013). *Applied logistic regression*. Oxford: Wiley. 
 - Gries, S. Th. (2009). *Quantitative corpus linguistics with R.* Berlin/Boston, MA: De Gruyter.	
  - Gries, S. Th. (2013). *Statistics for linguistics with R.* Berlin/Boston, MA: De Gruyter.	
-- Harrell, F. E. (2015). *Regression modeling strategies: With applications to linear models, logistic and ordinal Regression, and survival analysis*. New York, NY: Springer.
 - Levshina, N. (2015). *How to do linguistics with R.* Amsterdam/Philadelphia, PA: John Benjamins.	
 - Urdan, T. C. (2010). *Statistics in plain English.* New York, NY: Routledge.
-- Zuur, A. F., Leno, E. L., Elphick, C. S. (2010). A protocol for data exploration to avoid common statistical problems. *Methods in Ecology and Evolution* 1, 3-14. 

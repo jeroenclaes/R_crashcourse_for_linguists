@@ -25,12 +25,11 @@ library(dplyr)
 ## Introduction
 
 ## About this course (1/3)
-- Five modules:
+- Four modules:
     - Introduction to R (This module)
     - Viewing, manipulating, and exporting tabular data (Module 2)
     - Exploring qualitative variables (Module 3)
     - Exploring the relationships between qualitative variables (Module 4)
-    - Elements of logistic regression (Module 5)
 
 ## About this course (2/2)
 - Method:

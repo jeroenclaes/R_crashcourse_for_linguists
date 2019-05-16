@@ -2,13 +2,13 @@
 title: 'Topic 6: Relationships between qualitative variables'
 author: "Jeroen Claes"
 output:
+  word_document:
+    toc: no
   revealjs::revealjs_presentation:
     css: white.css
     self_contained: no
     transition: none
   html_document:
-    toc: no
-  word_document:
     toc: no
 ---
 
@@ -20,12 +20,11 @@ library(ggplot2)
 ```
 
 ## About this course 
-- Five modules:
+- Four modules:
     - Introduction to R (Module 1)
     - Viewing, manipulating, and exporting tabular data (Module 2)
     - Exploring qualitative variables (Module 3)
     - Exploring the relationships between qualitative variables (This module)
-    - Elements of logistic regression (Module 5)
 
 ## In this module
 - Cross-tabulation: the basic tool to explore relations between qualitative variables

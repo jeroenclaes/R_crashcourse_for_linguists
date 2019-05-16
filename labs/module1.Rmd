@@ -35,18 +35,15 @@ library(ggplot2)
 ```
 
 ```{r ex="library", type="sct"}
-test_library_function("dplyr", not_called_msg="Don't forget to load the dplyr package", incorrect_msg="Remember that we use e.g., `library(dplyr)` to load packages")
-test_library_function("ggplot2", not_called_msg="Don't forget to load the ggplot2 package", incorrect_msg="Remember that we use e.g., `library(dplyr)` to load packages")
-test_library_function("stringi", not_called_msg="Don't forget to load the stringi package", incorrect_msg="Remember that we use e.g., `library(dplyr)` to load packages")
+ex() %>% check_library("dplyr", not_called_msg="Don't forget to load the dplyr package", incorrect_msg="Remember that we use e.g., `library(dplyr)` to load packages")
+ex() %>% check_library("ggplot2", not_called_msg="Don't forget to load the ggplot2 package", incorrect_msg="Remember that we use e.g., `library(dplyr)` to load packages")
+ex() %>% check_library("stringi", not_called_msg="Don't forget to load the stringi package", incorrect_msg="Remember that we use e.g., `library(dplyr)` to load packages")
 success_msg("Great!")
 ```
 
 
 ## 2. Objects, vectors, and basic mathematics
 ### 2.1 Objects and vectors
-```{r, include=FALSE}
-tutorial::go_interactive()
-```
 
 ```{r ex="create_a", type="sample-code"}
 # Create a variable a, equal to 5
@@ -91,8 +88,9 @@ d
 ```
 
 ```{r ex="create_a", type="sct"}
-test_object("a")
-test_output_contains("d", incorrect_msg = "Make sure to print everything!.")
+ex() %>% check_object("a") %>% check_equal()
+
+ex() %>% check_object("d") %>% check_equal()
 success_msg("Great!")
 ```
 
@@ -120,7 +118,7 @@ d <- c(5, 6, 7, 8)
 ```
 
 ```{r ex="create_b", type="sct"}
-test_object("a")
+ex() %>% check_object("a") %>% check_equal()
 #test_output_contains("d", incorrect_msg = "Make sure to print everything!.")
 success_msg("Great!")
 ```
@@ -242,9 +240,6 @@ c / b
 ```
 
 ### 3. Loading data from CSV
-```{r, include=FALSE}
-tutorial::go_interactive()
-```
 
 ```{r ex="create_a", type="sample-code"}
 # Load the readr package
@@ -275,9 +270,9 @@ glimpse(dataSet)
 ```
 
 ```{r ex="create_a", type="sct"}
-test_object("dataSet")
-test_library_function("dplyr")
-test_library_function("readr")
-test_output_contains("glimpse(dataSet)", incorrect_msg = "Make sure to print the last six rows!")
+
+ex() %>% check_object("dataSet") %>% check_equal()
+ex() %>% check_library("dplyr")
+ex() %>% check_library("readr")
 success_msg("Great!")
 ```

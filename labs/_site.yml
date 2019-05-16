@@ -12,8 +12,6 @@ navbar:
     href: module3.html
   - text: 'Module 4'
     href: module4.html
-  - text: 'Module 5'
-    href: module5.html
 output_dir: _site
 output:
   html_document:
