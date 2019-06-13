@@ -2,13 +2,13 @@
 title: 'Module 2: Viewing, manipulating, and exporting tabular data'
 author: "Jeroen Claes"
 output:
-  word_document:
-    toc: no
   revealjs::revealjs_presentation:
     css: white.css
     self_contained: no
     transition: none
   html_document:
+    toc: no
+  word_document:
     toc: no
 ---
   
@@ -304,7 +304,7 @@ save(dataSet, file="corpus.rdata")
 - The variables (i.e., the object AND the name you gave it) become available in R memory after importing the `.rdata` file
 
 ```{r loadFunction, eval=FALSE}
-load("corpus.rdata-*")
+load("corpus.rdata")
 ```
 
 ## Taking stock and exercises

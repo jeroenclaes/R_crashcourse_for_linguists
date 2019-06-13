@@ -1,5 +1,5 @@
 ---
-title: 'Topic 6: Relationships between qualitative variables'
+title: 'Module 4: Relationships between qualitative variables'
 author: "Jeroen Claes"
 output:
   word_document:
@@ -88,14 +88,14 @@ prop.table(tab, 2)
 - Inferential statistics tries to infer a property of a population by studying a sample
 - Most often, we try to test a hypothesis about a property of a population by analyzing a sample
 
-## Hypothesis testing (1/3)
+## Hypothesis testing (1/2)
 - Before collecting data it is important to have:
     1. A research question: 
     - *Does the verb tense affect the occurrence rates of pluralized existential* haber *in Peninsular Spanish?* 
     2. Hypotheses: (theoretically motivated) tentative answers to these research questions: 
         - *The verb tense conditions the occurrence rates of pluralized existential* haber *in Peninsular Spanish* 
 
-## Hypothesis testing (2/3)
+## Hypothesis testing (2/2)
 - Each hypothesis (called *alternative hypothesis*) has its *null hypothesis*:  
     - *There is no effect of the verb tense on the occurrence rates of pluralized existential* haber *in Peninsular Spanish* 
 - A hypothesis test tries to estimate the probability of obtaining the observed or more extreme results assuming the null hypothesis
@@ -104,7 +104,7 @@ prop.table(tab, 2)
     - is larger than would be predicted by chance
 
 ##  Hypothesis tests for associations between qualitative variables
-##  Chi-square test of independence 
+##  Chi-square test of independence (1/5)
 - The following table shows that there is a sizeable difference between the frequencies of the singular and the plural existential the two tense groups
 
 ```{r table3a, eval=TRUE}
@@ -114,13 +114,13 @@ tab<-table(dataSet$tense, dataSet$type)
 prop.table(tab, 1)
 ```
 
-##  Chi-square test of independence 
+##  Chi-square test of independence (2/5)
 - But is this difference reliably large? To test this, we need to perform a `Chi-squared test of independence`
 - The `null hypothesis` of this test is that there is no association between the variables:
     - *There is no influence of the verb tense on the occurrence rate of singular and plural existential* haber
 - The test compares the `observed frequency` to the frequency you would expect by chance (`the expected frequency`) to see how likely the results are
 
-##  Chi-square test of independence 
+##  Chi-square test of independence (3/5)
 - To get the expected frequency for a table cell, we need to add the `marginal frequencies` to the table
 - Marginal frequencies are the row and column totals
 - We can get the marginal frequencies with `rowSums` and `colSums`
@@ -130,14 +130,14 @@ colSum<- colSums(tab)
 rowSum<-rowSums(tab)
 ```
 
-##  Chi-square test of independence 
+##  Chi-square test of independence (4/5)
 - For the cell in column 1, row 1, the expected frequency can be found with the following formula:
 ```{r table4, eval=TRUE}
 sampleSize <- sum(tab)
 (colSum[1]/sampleSize) * (rowSum[1]/sampleSize) * sampleSize
 ```
 
-##  Chi-square test of independence 
+##  Chi-square test of independence (5/5)
 - Basically, the chi-square test functions as follows:
     - Calculate the expected frequency for each cell
     - Substract the expected frequency from the observed frequency. The resulting number is the `residual`
@@ -192,7 +192,7 @@ fisher.test(dataSet$negation, dataSet$type)
 ```
 
 
-## About p < 0.05
+## About p < 0.05 (1/3)
 - Hypothesis tests output estimates of the probability of finding a test statistic (e.g., chi-squared value) as extreme or more extreme than the one we find assuming the null hypothesis of no association.
 - To interpret this probability, it is usually compared to a pre-defined **alpha level**:
     - A common value is 0.05
@@ -200,22 +200,22 @@ fisher.test(dataSet$negation, dataSet$type)
 - If the probability is lower than the alpha-level, we *reject* the null hypothesis 
 - If the probability is higher, we are forced to accept the null hypothesis
 - Here we find that p < 0.05, so we reject the null hypothesis: 
-    - There is less than a 5% chance of finding a result as extreme or more extreme assumping the null hypothesis of no association between negation and *haber* pluralization
+    - There is less than a 5% chance of finding a result as extreme or more extreme assuming the null hypothesis of no association between negation and *haber* pluralization
 
-## About p < 0.05
+## About p < 0.05 (2/3)
 - It is important to determine your alpha-level carefully:
     - Too strict: too many *Type I errors* (false positives: we reject the null, but it is true)
     - Too relaxed: too many *Type II errors* (false negatives: we accept the null, but it is false)
 - For most tests, the p-value will be smaller for larger samples. For large samples you should use lower alpha-levels (0.01 or 0.001)
 
-## About p < 0.05
+## About p < 0.05 (3/3)
 - Observe that our actual hypothesis was only tested indirectly, in two ways:
   - We do not test the hypothesis, but rather the null hypothesis
   - We do not test the null hypothesis, but rather the probability of obtaining the same or a more extreme test statistic assuming the null hypothesis
  
 ## A note on unethical practices
 - You will potentially make a fool out of yourself is you start comparing all possible groups in your data until you find some significant result. This is called *p-value hacking* and it is dangerous. Hypothesis testing methods become **useless** when used to do anything else than testing theoretically motivated hypotheses.
-- It is flatout unethical to tamper with your alpha-level once you have explored your results
+- It is unethical to tamper with your alpha-level once you have explored your results
 - p-values depend on sample size. A non-significant result may become significant with more observations. It is **unethical** to keep adding data until you reach p < 0.05 
 
 ## Some common misconceptions
@@ -227,11 +227,11 @@ fisher.test(dataSet$negation, dataSet$type)
 
 ## Taking stock and exercises
 - In this part you have learned:
-  - What the assumptions are of the Chi-squared test
-  - How to perform it in R
-  - When to perform a Fisher-Yates exact test
-  - How to perform a Fisher-Yates exact test in R
-  - Some clarifications about p-values 
+    - What the assumptions are of the Chi-squared test
+    - How to perform it in R
+    - When to perform a Fisher-Yates exact test
+    - How to perform a Fisher-Yates exact test in R
+    - Some clarifications about p-values 
 - Please go to : http://www.jeroenclaes.be/r_crashcourse_for_linguists/module4.html, and perform the exercises under 2.2, 3.2, and 4.2 (*Validating the assumptions of the significance test*)
 
 ##  Effect sizes for relations between qualitative variables
